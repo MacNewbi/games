@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机抽取三张扑克牌</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 24px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>随机抽取三张扑克牌</h1>
+  <button onclick="drawCards()">抽取三张牌</button>
+  <div id="result"></div>
+  <script>
+    function drawCards() {
+      const suits = ['♠', '♥', '♦', '♣'];
+      const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+      const deck = [];
+      for (const suit of suits) {
+        for (const rank of ranks) {
+          deck.push(rank + suit);
+        }
+      }
+      const selectedCards = [];
+      for (let i = 0; i < 3; i++) {
+        const randomIndex = Math.floor(Math.random() * deck.length);
+        selectedCards.push(deck[randomIndex]);
+        deck.splice(randomIndex, 1);
+      }
+
+      // 对抽取的牌进行排序
+      selectedCards.sort((a, b) => {
+        const rankOrder = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        const rankA = rankOrder.indexOf(a.slice(0, a.length - 1));
+        const rankB = rankOrder.indexOf(b.slice(0, b.length - 1));
+        return rankA - rankB;
+      });
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `${selectedCards.join(' ')}`;
+    }
+  </script>
+</body>
+
+</html>
